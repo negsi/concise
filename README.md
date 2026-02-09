@@ -15,8 +15,8 @@ Concise allows users to subscribe to RSS feeds from various news portals and sum
 ### 1. Clone or download repository
 
 ```bash
-git clone <REPO>
-cd <REPO>
+git clone https://github.com/negsi/concise.git
+cd concise
 ```
 
 ### 2. Create a virtual environment (optional, but recommended)
