@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - layout structure for main panel grid system
 - on demand grid structure building
+- SweetAlert modal dialog for adding rss feeds
 
 ## [0.0.1] - 2026-02-10
 
