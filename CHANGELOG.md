@@ -8,6 +8,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 
-- Project base structure and layout
+### Changed
 
-[Unreleased]: https://github.com/negsi/concise/compare/develop...HEAD
+## [0.0.1] - 2026-02-10
+
+### Added
+
+- base application structure and theme
+
+[Unreleased]: https://github.com/negsi/concise/compare/v0.0.1...develop
+[0.0.1]: https://github.com/negsi/concise/releases/tag/v0.0.1
