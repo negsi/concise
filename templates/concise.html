@@ -18,37 +18,24 @@
 	<template id="swal_template">
 		<div class="form-group">
 			<div class="input-group">
-			<input 
-			id="feed_source"
-			type="text" 
-			class="form-control" 
-			placeholder="Enter feed url or choose a predefined source..."
-			aria-label="Text input with dropdown button" />
-			<div class="input-group-append">
-				<button
-				class="btn btn-primary btn-border dropdown-toggle"
-				type="button"
-				data-bs-toggle="dropdown"
-				aria-haspopup="true"
-				aria-expanded="false"
-				>
-				Predefined
-				</button>
-				<div class="dropdown-menu">
-					<a class="dropdown-item" href="#">Spiegel Online</a>
-					<a class="dropdown-item" href="#">Zeit Online</a>
-					<a class="dropdown-item" href="#">JUNGE FREIHEIT</a>
-					<a class="dropdown-item" href="#">taz</a>
-					<a class="dropdown-item" href="#">Handelsblatt</a>
-					<a class="dropdown-item" href="#">Süddeutsche Zeitung</a>
-					<a class="dropdown-item" href="#">Stern</a>
-					<a class="dropdown-item" href="#">Frankfurter Allgemeine</a>
-					<a class="dropdown-item" href="#">Bundesregierung</a>
-					<a class="dropdown-item" href="#">t-online</a>
-					<a class="dropdown-item" href="#">Tagesspiegel</a>
-					<a class="dropdown-item" href="#">Focus Online</a>
+				<input 
+				id="feed_source"
+				type="text" 
+				class="form-control" 
+				placeholder="Enter feed url or choose a predefined source..."
+				aria-label="Text input with dropdown button" />
+				<div class="input-group-append">
+					<button
+					class="btn btn-primary btn-border dropdown-toggle"
+					type="button"
+					data-bs-toggle="dropdown"
+					aria-haspopup="true"
+					aria-expanded="false"
+					>
+					Predefined
+					</button>
+					<div id="feed_dropdown_menu" class="dropdown-menu"></div>
 				</div>
-			</div>
 			</div>
 		</div>
 	</template>

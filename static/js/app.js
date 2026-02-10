@@ -5,6 +5,24 @@
 var Concise = function() {
 
     /**
+     * Predfined RSS feed URLs for the dropdown menu in the "Add RSS Source" dialog
+     */
+    var predefinedFeeds = [
+        { name: "Spiegel Online", url: "https://www.spiegel.de/international/index.rss" },
+        { name: "Zeit Online", url: "http://newsfeed.zeit.de/index" },
+        { name: "JUNGE FREIHEIT", url: "https://jungefreiheit.de/feed/" },
+        { name: "taz", url: "https://taz.de/!p4608;rss/" },
+        { name: "Handelsblatt", url: "https://www.handelsblatt.com/contentexport/feed/top-themen" },
+        { name: "Süddeutsche Zeitung", url: "https://rss.sueddeutsche.de/rss/Topthemen" },
+        { name: "Stern", url: "https://www.stern.de/feed/standard/alle-nachrichten/" },
+        { name: "Frankfurter Allgemeine", url: "https://www.faz.net/rss/aktuell/" },
+        { name: "WELT", url: "https://www.welt.de/feeds/topnews.rss" },
+        { name: "t-online", url: "https://www.t-online.de/nachrichten/feed.rss" },
+        { name: "Tagesschau", url: "https://www.tagesschau.de/infoservices/alle-meldungen-100~rss2.xml" },
+        { name: "heise online", url: "https://www.heise.de/rss/heise.rdf" }
+    ];
+
+    /**
      * Creates a new column DOM node based on the template.
      *
      * @returns {HTMLDivElement}
@@ -68,6 +86,23 @@ var Concise = function() {
 
             appendColumnToNextFreeRow([row1, row2]);
         });
+
+        /**
+         * Populate the dropdown menu with predefined feeds after the dialog is rendered.
+         */
+        setTimeout(function() {
+            var $menu = $('.swal-modal .dropdown-menu');
+            $menu.empty();
+
+            predefinedFeeds.forEach(function(feed) {
+                $('<a>')
+                    .addClass('dropdown-item')
+                    .attr('href', '#')
+                    .text(feed.name)
+                    .data('url', feed.url)
+                    .appendTo($menu);
+            });
+        }, 0);
     };
 
     /**
@@ -81,11 +116,16 @@ var Concise = function() {
         $('#add_rss_source').click(function(e){
             showSwalDialog()
         });
-    };
 
-    // Init scrollbars when page is loaded
-    var initScrollbars = function() {    
-        $('.scrollbar-inner').scrollbar();
+        /**
+         * Handles clicks on the dropdown items in the "Add RSS Source" dialog 
+         * to populate the input field with the selected feed URL.
+         */
+        $(document).on('click', '.dropdown-item', function(e) {
+            e.preventDefault();
+            var url = $(this).data('url');
+            $('#feed_source').val(url);
+        });
     };
 
     /**
@@ -94,7 +134,6 @@ var Concise = function() {
     return {
         init: function() {
             registerEvents();
-            initScrollbars();
         },
     };
 }();
