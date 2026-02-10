@@ -29,9 +29,14 @@ var Concise = function() {
         });
     };
 
+    var initScrollbars = function() {    
+        $('.scrollbar-inner').scrollbar();
+    };
+
     return {
         init: function() {
             registerEvents();
+            initScrollbars();
         },
     };
 }();

@@ -5,3 +5,7 @@
 .grid-container {
     height: calc(100vh - 121px)
 }
+
+.scrollbar-inner {
+    height: 100%;
+}
