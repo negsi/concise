@@ -32,9 +32,7 @@
                     {% include "partials/main-header.html" %}
                 </div>
                 <div class="container">
-                    <div class="page-inner">
-                        {% block content %}{% endblock %}
-                    </div>
+                    {% block content %}{% endblock %}
                 </div>
                 <footer class="footer">
                     {% include "partials/footer.html" %}
@@ -47,6 +45,7 @@
         <script src="{{ url_for('static', filename='js/plugin/jquery-scrollbar/jquery.scrollbar.min.js') }}"></script>
         <script src="{{ url_for('static', filename='js/plugin/sweetalert/sweetalert.min.js') }}"></script>
         <script src="{{ url_for('static', filename='js/kaiadmin.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/app.js') }}"></script>
         {% block scripts %}{% endblock %}
     </body>
 </html>
