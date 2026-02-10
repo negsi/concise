@@ -39,6 +39,38 @@ var Concise = function() {
     };
 
     /**
+     * Shows a SweetAlert dialog using the HTML template.
+     */
+    var showSwalDialog = function() {
+
+        var tpl = document.getElementById("swal_template");
+        var clone = tpl.content.cloneNode(true);
+        var content = clone.firstElementChild;
+
+        swal({
+            title: 'New RSS Source',
+            content: content,
+            buttons: {
+                cancel: {
+                    visible: true,
+                    className: 'btn btn-danger'
+                },
+                confirm: {
+                    className: 'btn btn-secondary'
+                }
+            }
+        }).then(function() {
+            var value = $('#feed_source').val();
+            console.log("RSS Input:", value);
+
+            var row1 = document.getElementById("row1");
+            var row2 = document.getElementById("row2");
+
+            appendColumnToNextFreeRow([row1, row2]);
+        });
+    };
+
+    /**
      * Registers all event listeners we need
      */
     var registerEvents = function() {
@@ -47,10 +79,7 @@ var Concise = function() {
          * Adds a new RSS source column to the grid when the button is clicked.
          */
         $('#add_rss_source').click(function(e){
-            var row1 = document.getElementById("row1");
-            var row2 = document.getElementById("row2");
-
-            appendColumnToNextFreeRow([row1, row2]);
+            showSwalDialog()
         });
     };
 
