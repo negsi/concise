@@ -77,7 +77,12 @@ var Concise = function() {
                     className: 'btn btn-secondary'
                 }
             }
-        }).then(function() {
+        }).then(function(result) {
+
+            if (result !== true) {
+                return; 
+            }
+
             var value = $('#feed_source').val();
             console.log("RSS Input:", value);
 
