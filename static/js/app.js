@@ -5,45 +5,52 @@
 var Concise = function() {
 
     /**
+     * Creates a new column DOM node based on the template.
+     *
+     * @returns {HTMLDivElement}
+     */
+    var createColumn = function() {
+        const col = document.createElement("div");
+        const tpl = document.getElementById("column_template");
+        const clone = tpl.content.cloneNode(true);
+
+        col.classList.add("col-2", "h-100");
+        col.appendChild(clone);
+
+        // Initialize scrollbar after DOM insertion
+        setTimeout(function() {
+            $(col).find(".scrollbar-inner").scrollbar();
+        }, 0);
+
+        return col;
+    };
+
+    /**
+     * Appends a new column to the next free row (max 6 per row).
+     *
+     * @param {HTMLElement[]} rows
+     */
+    var appendColumnToNextFreeRow = function(rows) {
+        for (var i = 0; i < rows.length; i++) {
+            if (rows[i].children.length < 6) {
+                return rows[i].appendChild(createColumn());
+            }
+        }
+    };
+
+    /**
      * Registers all event listeners we need
      */
     var registerEvents = function() {
 
         /**
-         * Adds a new RSS source column to the grid when the "Add RSS Source" button is clicked.
+         * Adds a new RSS source column to the grid when the button is clicked.
          */
         $('#add_rss_source').click(function(e){
+            var row1 = document.getElementById("row1");
+            var row2 = document.getElementById("row2");
 
-            const row1 = document.getElementById("row1");
-            const row2 = document.getElementById("row2");
-
-            /**
-             * Creates a new DomNode and appends it to the corresponding row
-             * 
-             * @returns {HTMLDivElement}
-             */
-            const createColumn = () => {
-
-                const col = document.createElement("div");
-                const tpl = document.getElementById("column_template"); 
-                const clone = tpl.content.cloneNode(true); 
-
-                col.classList.add("col-2", "h-100");
-                col.appendChild(clone);
-
-                // Initialize scrollbar as soon as the element is in the DOM 
-                setTimeout(() => { 
-                    $(col).find(".scrollbar-inner").scrollbar();
-                }, 0);
-
-                return col;
-            };
-
-            /**
-             * For now we are using 6 columns and 2 rows as maximum
-             */
-            if (row1.children.length < 6) return row1.appendChild(createColumn());
-            if (row2.children.length < 6) return row2.appendChild(createColumn());
+            appendColumnToNextFreeRow([row1, row2]);
         });
     };
 
