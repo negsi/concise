@@ -9,3 +9,7 @@
 .scrollbar-inner {
     height: 100%;
 }
+
+.swal-modal {
+    width: 600px;
+}
