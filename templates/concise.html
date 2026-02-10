@@ -3,23 +3,16 @@
 {% block content %}
 	<div class="page-inner p-0">
 		<div class="container-fluid p-0 grid-container">
-			<!-- Base layout for grid structure -->
-			<div class="row g-0 h-50">
-				<div class="col h-100"><div class="scrollbar-inner">Column</div></div>
-				<div class="col h-100"><div class="scrollbar-inner">Column</div></div>
-				<div class="col h-100"><div class="scrollbar-inner">Column</div></div>
-				<div class="col h-100"><div class="scrollbar-inner">Column</div></div>
-				<div class="col h-100"><div class="scrollbar-inner">Column</div></div>
-				<div class="col h-100"><div class="scrollbar-inner">Column</div></div>
-			</div>
-			<div class="row g-0 h-50">
-				<div class="col h-100"><div class="scrollbar-inner">Column</div></div>
-				<div class="col h-100"><div class="scrollbar-inner">Column</div></div>
-				<div class="col h-100"><div class="scrollbar-inner">Column</div></div>
-				<div class="col h-100"><div class="scrollbar-inner">Column</div></div>
-				<div class="col h-100"><div class="scrollbar-inner">Column</div></div>
-				<div class="col h-100"><div class="scrollbar-inner">Column</div></div>
-			</div>
+			<div id="row1" class="row g-0 h-50"></div>
+			<div id="row2" class="row g-0 h-50"></div>
 		</div>
 	</div>
+
+	<template id="column_template">
+		<div class="scrollbar-inner">
+			<h4>COLUMN</h4>
+			<p>NOT_YET_IMPLEMENTED</p>
+		</div>
+	</template>
+
 {% endblock %}

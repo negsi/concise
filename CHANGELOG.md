@@ -9,8 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 
 - layout structure for main panel grid system
-
-### Changed
+- on demand grid structure building
 
 ## [0.0.1] - 2026-02-10
 
