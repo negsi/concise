@@ -1,0 +1,7 @@
+.main-panel .g-0 {
+    --bs-gutter-x: 0; /* Overwrite changes made by kaiadmin */
+}
+
+.grid-container {
+    height: calc(100vh - 121px)
+}
