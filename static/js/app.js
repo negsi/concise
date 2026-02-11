@@ -8,7 +8,7 @@ var Concise = function() {
      * Predfined RSS feed URLs for the dropdown menu in the "Add RSS Source" dialog
      */
     var predefinedFeeds = [
-        { name: "Spiegel Online", url: "https://www.spiegel.de/international/index.rss" },
+        { name: "Spiegel Online", url: "https://www.spiegel.de/index.rss" },
         { name: "Zeit Online", url: "http://newsfeed.zeit.de/index" },
         { name: "JUNGE FREIHEIT", url: "https://jungefreiheit.de/feed/" },
         { name: "taz", url: "https://taz.de/!p4608;rss/" },
@@ -23,17 +23,53 @@ var Concise = function() {
     ];
 
     /**
-     * Creates a new column DOM node based on the template.
+     * Shortens a text to a maximum length without cutting words.
+     * Words are added until the next word would exceed the limit.
      *
-     * @returns {HTMLDivElement}
+     * @param {string} text The input text to shorten.
+     * @param {number} maxLength The maximum allowed length.
+     * @returns {string} The shortened text.
      */
-    var createColumn = function() {
+    var shortenText = function(text, maxLength) {
+        var words = text.split(" ");
+        var result = "";
+
+        for (var i = 0; i < words.length; i++) {
+            var test = result.length === 0
+                ? words[i]
+                : result + " " + words[i];
+
+            if (test.length > maxLength) {
+                break;
+            }
+
+            result = test;
+        }
+
+        // Remove ugly trailing punctuation or separators 
+        result = result.replace(/[-|/:.,!?]+$/, "");
+
+        return result;
+    };
+
+    /**
+     * Creates a new column DOM node based on the template.
+     * The column receives a shortened feed title and initializes
+     * the custom scrollbar after insertion.
+     *
+     * @param {string} feedTitle The full feed title received from the backend.
+     * @returns {HTMLDivElement} The constructed column element.
+     */
+    var createColumn = function(feedTitle) {
         const col = document.createElement("div");
         const tpl = document.getElementById("column_template");
         const clone = tpl.content.cloneNode(true);
 
         col.classList.add("col-2", "h-100");
         col.appendChild(clone);
+
+        var title = shortenText(feedTitle, 20);
+        $(col).find("h4.card-secondary").text(title);
 
         // Initialize scrollbar after DOM insertion
         setTimeout(function() {
@@ -48,10 +84,11 @@ var Concise = function() {
      *
      * @param {HTMLElement[]} rows
      */
-    var appendColumnToNextFreeRow = function(rows) {
+    var appendColumnToNextFreeRow = function(rows, feedData) {
+        var feedTitle = feedData.feed_title;
         for (var i = 0; i < rows.length; i++) {
             if (rows[i].children.length < 6) {
-                return rows[i].appendChild(createColumn());
+                return rows[i].appendChild(createColumn(feedTitle));
             }
         }
     };
@@ -84,12 +121,26 @@ var Concise = function() {
             }
 
             var value = $('#feed_source').val();
-            console.log("RSS Input:", value);
 
-            var row1 = document.getElementById("row1");
-            var row2 = document.getElementById("row2");
+            $.ajax({
+                url: '/fetch_feed',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ url: value }),
+                success: function(feedData) {
 
-            appendColumnToNextFreeRow([row1, row2]);
+                    /**
+                     * TODO: Not necessary, fetch dom nodes in appendColumnToNextFreeRow
+                     */
+                    var row1 = document.getElementById("row1");
+                    var row2 = document.getElementById("row2");
+
+                    appendColumnToNextFreeRow([row1, row2], feedData);
+                },
+                error: function(err) {
+                    console.error("XMLHttpRequest Error:", err)
+                }
+            })
         });
 
         /**
