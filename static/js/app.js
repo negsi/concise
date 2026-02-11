@@ -58,9 +58,10 @@ var Concise = function() {
      * the custom scrollbar after insertion.
      *
      * @param {string} feedTitle The full feed title received from the backend.
+     * @param {Object[]} feedEntries The feed entries received from the backend.
      * @returns {HTMLDivElement} The constructed column element.
      */
-    var createColumn = function(feedTitle) {
+    var createColumn = function(feedTitle, feedEntries) {
         const col = document.createElement("div");
         const tpl = document.getElementById("column_template");
         const clone = tpl.content.cloneNode(true);
@@ -70,6 +71,21 @@ var Concise = function() {
 
         var title = shortenText(feedTitle, 20);
         $(col).find("h4.card-secondary").text(title);
+
+        // Replace placeholder <p> with a <ul> of entries
+        var container = $(col).find(".scrollbar-inner");
+        container.find("p").remove();
+
+        // Create a <ul> and populate it with feed entries
+        var ul = $("<ul>").addClass("feed-entries");
+
+        feedEntries.slice(0, 15).forEach(function(entry) {
+            $("<li>")
+                .text(entry.title)
+                .appendTo(ul);
+        });
+
+        container.append(ul);
 
         // Initialize scrollbar after DOM insertion
         setTimeout(function() {
@@ -88,7 +104,7 @@ var Concise = function() {
         var feedTitle = feedData.feed_title;
         for (var i = 0; i < rows.length; i++) {
             if (rows[i].children.length < 6) {
-                return rows[i].appendChild(createColumn(feedTitle));
+                return rows[i].appendChild(createColumn(feedTitle, feedData.entries));
             }
         }
     };

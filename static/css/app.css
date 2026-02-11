@@ -13,3 +13,22 @@
 .swal-modal {
     width: 600px;
 }
+
+.feed-entries {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 0 5px;
+}
+
+.feed-entries li {
+    cursor: pointer;
+    transition: background-color 0.15s ease, color 0.15s ease;
+    padding: 2px 4px;
+    border-radius: 3px;
+}
+
+.feed-entries li:hover {
+    background-color: #1a2035;
+    color: #fff;
+}
