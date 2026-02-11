@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 
+### Changed
+
+## [0.0.2] - 2026-02-11
+
+### Added
+
 - layout structure for main panel grid system
 - on demand grid structure building
 - SweetAlert modal dialog for adding rss feeds
@@ -22,5 +28,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - base application structure and theme
 
-[Unreleased]: https://github.com/negsi/concise/compare/v0.0.1...develop
+[Unreleased]: https://github.com/negsi/concise/compare/v0.0.2...develop
+[0.0.2]: https://github.com/negsi/concise/releases/tag/v0.0.2
 [0.0.1]: https://github.com/negsi/concise/releases/tag/v0.0.1
