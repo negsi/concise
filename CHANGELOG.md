@@ -12,6 +12,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - on demand grid structure building
 - SweetAlert modal dialog for adding rss feeds
 - predefined sources for german rss feeds
+- backend logic for fetching and parsing feed data
+- XMLHttpRequest-Handling in frontend
 
 ## [0.0.1] - 2026-02-10
 
