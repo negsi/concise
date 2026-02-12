@@ -33,6 +33,16 @@ venv\Scripts\activate      # Windows
 pip install -r requirements.txt
 ```
 
+### 4. Add your OpenAI API Token
+
+For testing purposes we currently support only OpenAI language models.
+Please make sure to provide a valid _OPENAI_API_KEY_ in your _.env_ file to run the app. 
+
+```bash
+cp .env.template .env
+```
+Then edit _.env_ and insert your _OPENAI_API_KEY_.
+
 ## ▶️ Running the application
 
 ```bash
