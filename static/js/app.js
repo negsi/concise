@@ -86,6 +86,8 @@ var Concise = function() {
                     // Send item url to backend and crawl article content
                     var item = $(this).data("entry");
 
+                    // Send the clicked feed entry to the backend so the server can 
+                    // fetch the article URL, crawl the webpage, and extract the text.
                     fetch("/fetch_article", {
                         method: "POST",
                         headers: {
@@ -159,25 +161,31 @@ var Concise = function() {
 
             var value = $('#feed_source').val();
 
-            $.ajax({
-                url: '/fetch_feed',
-                method: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify({ url: value }),
-                success: function(feedData) {
-
-                    /**
-                     * TODO: Not necessary, fetch dom nodes in appendColumnToNextFreeRow
-                     */
-                    var row1 = document.getElementById("row1");
-                    var row2 = document.getElementById("row2");
-
-                    appendColumnToNextFreeRow([row1, row2], feedData);
+            // Send the RSS feed URL to the backend so the server can fetch, 
+            // parse, and return the feed metadata and its entries.
+            fetch("/fetch_feed", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
                 },
-                error: function(err) {
-                    console.error("XMLHttpRequest Error:", err)
-                }
+                body: JSON.stringify({
+                    url: value
+                })
             })
+            .then(response => response.json())
+            .then(feedData => {
+
+                /**
+                 * TODO: Not necessary, fetch dom nodes in appendColumnToNextFreeRow
+                 */
+                var row1 = document.getElementById("row1");
+                var row2 = document.getElementById("row2");
+
+                appendColumnToNextFreeRow([row1, row2], feedData);
+            })
+            .catch(err => {
+                console.error("Error fetching feed:", err);
+            });
         });
 
         /**
