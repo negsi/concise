@@ -32,3 +32,13 @@
     background-color: #1a2035;
     color: #fff;
 }
+
+#article_summary {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.article-wide {
+    width: 900px !important;
+    max-width: 90%;
+}

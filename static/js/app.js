@@ -89,6 +89,15 @@ var Concise = function() {
                 .data("entry", entry)
                 .on("click", function () {
 
+                    // Lade-Modal anzeigen
+                    swal({
+                        title: "Loading article...",
+                        text: "Please have patience...",
+                        buttons: false,
+                        closeOnClickOutside: false,
+                        className: "article-wide"
+                    });
+
                     // Send item url to backend and crawl article content
                     var item = $(this).data("entry");
 
@@ -105,7 +114,27 @@ var Concise = function() {
                     })
                     .then(response => response.json())
                     .then(data => {
-                        console.log("Article response:", data);
+
+                        swal.close();
+                        const html = $("#article_modal").html();
+
+                        swal({
+                            content: {
+                                element: "div",
+                                attributes: {
+                                    innerHTML: html
+                                }
+                            },
+                            buttons: {
+                                confirm: {
+                                    className: 'btn btn-secondary'
+                                }
+                            },
+                            className: "article-wide"
+                        });
+
+                        $(".swal-modal #article_summary").html(data.summary);
+                        $(".swal-modal #article_link").attr("href", data.url_received);
                     })
                     .catch(err => {
                         console.error("Error fetching article:", err);
