@@ -8,7 +8,7 @@ var Concise = function() {
      * Predfined RSS feed URLs for the dropdown menu in the "Add RSS Source" dialog
      */
     var predefinedFeeds = [
-        { name: "Spiegel Online", url: "https://www.spiegel.de/index.rss" },
+        { name: "n-tv", url: "https://www.n-tv.de/politik/rss" },
         { name: "Zeit Online", url: "http://newsfeed.zeit.de/index" },
         { name: "JUNGE FREIHEIT", url: "https://jungefreiheit.de/feed/" },
         { name: "taz", url: "https://taz.de/!p4608;rss/" },
@@ -19,6 +19,7 @@ var Concise = function() {
         { name: "WELT", url: "https://www.welt.de/feeds/topnews.rss" },
         { name: "t-online", url: "https://www.t-online.de/nachrichten/feed.rss" },
         { name: "Tagesschau", url: "https://www.tagesschau.de/infoservices/alle-meldungen-100~rss2.xml" },
+        { name: "Spiegel Online", url: "https://www.spiegel.de/index.rss" },
         { name: "heise online", url: "https://www.heise.de/rss/heise.rdf" }
     ];
 
@@ -79,6 +80,11 @@ var Concise = function() {
         feedEntries.slice(0, 15).forEach(function(entry) {
             $("<li>")
                 .text(entry.title)
+                .data("entry", entry)
+                .on("click", function () {
+                    var item = $(this).data("entry");
+                    console.log(item);
+                })
                 .appendTo(ul);
         });
 
