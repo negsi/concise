@@ -3,14 +3,44 @@ MIT License
 Copyright (c) 2026 Christian Siewert
 
 Concise – An AI News Summarizer
-Main Flask application entry point.
+
+|======================================================|
+| FOR TESTING PURPOSES WE ONLY SUPPORT OPENAI LLMs ATM |
+|      AND FOR NOW YOU >>>MUST<<< PROVIDE A VALID      |
+|   OPENAI_API_KEY IN YOUR .env FILE TO RUN THE APP.   |
+|======================================================|
 """
 
+# --- Standard library imports ---
+import os
+
+# --- Third‑party imports ---
 import requests
+from openai import OpenAI
 from bs4 import BeautifulSoup
+from dotenv import load_dotenv 
 from flask import Flask, request, jsonify, render_template
 
+# --- Load environment variables ---
+load_dotenv()
+
+# --- Validate required variables ---
+if not os.getenv("OPENAI_API_KEY"):
+    raise RuntimeError("OPENAI_API_KEY is not set. Please configure your .env file.")
+
+# --- Initialize clients ---
+client = OpenAI()
+
+# --- Initialize Flask ---
 app = Flask(__name__)
+
+# --- Load system prompt ---
+def load_system_prompt():
+    with open("prompts/system_prompt.txt", "r", encoding="utf-8") as f:
+        return f.read().strip()
+
+SYSTEM_PROMPT = load_system_prompt()
+OPENAI_MODEL  = os.getenv("OPENAI_MODEL", "gpt-5-nano") 
 
 @app.route("/")
 def index():
@@ -113,11 +143,42 @@ def fetch_article():
     paragraphs = soup.find_all("p")
     article_text = "\n".join(p.get_text(strip=True) for p in paragraphs)
 
+    # Call AI LLM to summarize the article text
+    summary = summarize_with_ai(article_text)
+
     return jsonify({
         "status": "ok",
         "url_received": url,
-        "article_text": article_text
+        "summary": summary
     })
+
+def summarize_with_ai(text):
+    """
+    Generate a concise summary of the provided article text using
+    an attached AI language model.
+
+    Parameters:
+        text (str): The full article content extracted by the crawler.
+
+    Returns:
+        str: A compact, coherent summary produced by the configured
+             language model.
+
+    Notes:
+        - This function acts as an abstraction layer so the backend
+          remains independent of the specific AI provider.
+        - The actual model request should be implemented here.
+    """
+
+    response = client.chat.completions.create(
+        model=OPENAI_MODEL,
+        messages=[
+            {"role": "system", "content": SYSTEM_PROMPT},
+            {"role": "user", "content": text}
+        ]
+    )
+
+    return response.choices[0].message.content
 
 
 # Development entry point
