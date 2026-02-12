@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 
+- XMLHttpRequest-Handling for crawling website data in frontend
+- backend logic for crawling website data
+
 ### Changed
 
 ## [0.0.2] - 2026-02-11

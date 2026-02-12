@@ -82,8 +82,26 @@ var Concise = function() {
                 .text(entry.title)
                 .data("entry", entry)
                 .on("click", function () {
+
+                    // Send item url to backend and crawl article content
                     var item = $(this).data("entry");
-                    console.log(item);
+
+                    fetch("/fetch_article", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            link: item.link
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log("Article response:", data);
+                    })
+                    .catch(err => {
+                        console.error("Error fetching article:", err);
+                    });
                 })
                 .appendTo(ul);
         });
