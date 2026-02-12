@@ -6,6 +6,8 @@ Concise – An AI News Summarizer
 Main Flask application entry point.
 """
 
+import requests
+from bs4 import BeautifulSoup
 from flask import Flask, request, jsonify, render_template
 
 app = Flask(__name__)
@@ -95,10 +97,26 @@ def fetch_article():
     data = request.get_json()
     url = data.get("link")
 
+    try:
+        # Fetch the HTML content of the article
+        response = requests.get(url, timeout=10)
+        response.raise_for_status()
+    except Exception as e:
+        return jsonify({
+            "status": "error",
+            "message": f"Failed to fetch URL: {e}"
+    }), 400
+
+    soup = BeautifulSoup(response.text, "html.parser")
+
+    # Very simple text extraction for now
+    paragraphs = soup.find_all("p")
+    article_text = "\n".join(p.get_text(strip=True) for p in paragraphs)
+
     return jsonify({
         "status": "ok",
         "url_received": url,
-        "article_text": "NOT_YET_IMPLEMENTED"
+        "article_text": article_text
     })
 
 
