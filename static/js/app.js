@@ -72,11 +72,8 @@ var Concise = function() {
         var title = shortenText(feedTitle, 20);
         $(col).find("h4.card-secondary").text(title);
 
-        // Replace placeholder <p> with a <ul> of entries
+        // Populate feed entries (limited to 15 atm)
         var container = $(col).find(".scrollbar-inner");
-        container.find("p").remove();
-
-        // Create a <ul> and populate it with feed entries
         var ul = $("<ul>").addClass("feed-entries");
 
         feedEntries.slice(0, 15).forEach(function(entry) {
