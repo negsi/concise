@@ -77,6 +77,12 @@ var Concise = function() {
         var container = $(col).find(".scrollbar-inner");
         var ul = $("<ul>").addClass("feed-entries");
 
+        /**
+         * Render up to 15 feed entries as clickable <li> elements.
+         * Each item stores the full feed entry object via jQuery .data(),
+         * allowing the click handler to access all metadata (title, link, etc.)
+         * when the user selects an article.
+         */
         feedEntries.slice(0, 15).forEach(function(entry) {
             $("<li>")
                 .text(entry.title)
@@ -133,7 +139,9 @@ var Concise = function() {
     };
 
     /**
-     * Shows a SweetAlert dialog using the HTML template.
+     * Open a SweetAlert modal that lets the user enter a new RSS feed URL.
+     * If the user confirms, the URL is sent to the backend so the server
+     * can fetch, parse, and return the feed metadata and its entries.
      */
     var showSwalDialog = function() {
 
@@ -141,6 +149,7 @@ var Concise = function() {
         var clone = tpl.content.cloneNode(true);
         var content = clone.firstElementChild;
 
+        // Open the SweetAlert dialog
         swal({
             title: 'New RSS Source',
             content: content,
