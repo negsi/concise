@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - XMLHttpRequest-Handling for crawling website data in frontend
 - backend logic for crawling website data
+- backend logic for calling OpenAI LLM (gpt-5-nano atm)
 
 ### Changed
 
