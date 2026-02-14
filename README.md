@@ -2,6 +2,8 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/588f6a7f-bf9b-4311-b2f8-b94d13775122" />
+
 Concise allows users to subscribe to RSS feeds from various news portals and summarizes the articles concisely using AI.
 
 ## 🚀 Requirements
